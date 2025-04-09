@@ -1,0 +1,214 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+/* general styling for basic website*/
+
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+body {
+   font-family: "Poppins", sans-serif;
+   background-color: #fdfde5; /* Light pastel yellow */
+   color: #333;
+   line-height: 1.6;
+   text-align: center;
+}
+
+
+/* saw this on basic website starter kit thought it would be nice to have smooth scrolling*/
+
+html {
+   scroll-behavior: smooth;
+}
+
+
+/* navigation styling for the links */
+.nav-links {
+   display: flex;
+   justify-content: center;
+   gap: 1rem;
+   list-style: none;
+   font-size: 1.4rem; 
+   padding: 10px 0; 
+}
+
+
+.nav-links li {
+   background-color: white; 
+   padding: 12px 25px; 
+   border-radius: 10px; /* makes the corners round which took forever to figure out how to do it */
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* give it a shadow saw it on overstack*/
+   transition: transform 0.2s ease-in-out, background-color 0.3s;
+}
+
+.nav-links a {
+   color: #333; 
+   text-decoration: none;
+   font-weight: 600;
+   display: block; 
+}
+
+/* cool detail where when you hover on the links it makes it gold with white text*/
+
+.nav-links li:hover {
+   transform: scale(1.05); 
+   background-color: #f4c542; 
+}
+
+.nav-links a:hover {
+   color: white; 
+   text-decoration: none;
+}
+/* Logo */
+.logo {
+   font-size: 2rem;
+   color: white; 
+   font-weight: bold;
+   text-align: center;
+}
+
+/* makes the text boxes centered with a shadow */
+.content-box {
+   max-width: 800px;
+   margin: 50px auto;
+   padding: 40px;
+   background-color: white;
+   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+   border-radius: 10px;
+   text-align: center;
+}
+
+/* makes the headings blend in with the theme*/
+h1, h2 {
+   font-size: 2.5rem;
+   color: #4a5568; 
+   margin-bottom: 15px;
+}
+
+h3 {
+   color: #4a5568;
+}
+
+p {
+   font-size: 1.1rem;
+   color: rgb(85, 85, 85);
+   line-height: 1.6;
+   margin-bottom: 20px;
+}
+
+/* button class used for when you click on the IBT button so that it tkaes you to the website */
+.button {
+   display: inline-block;
+   background-color: #f4c542; 
+   color: #333;
+   padding: 12px 24px;
+   border-radius: 5px;
+   text-decoration: none;
+   font-weight: bold;
+   transition: background-color 0.3s;
+}
+
+/* hover for the button*/
+
+.button:hover {
+   background-color: #f7d46d; 
+}
+
+/* creates a center for the section*/
+section {
+   padding: 60px 20px;
+   text-align: center;
+}
+
+/* section for the words to be in a blue box as well as the images */
+.splash {
+   background: linear-gradient(to right, #a4c8f0, #d7e9fb); /* Light pastel blue gradient */
+   color: #333;
+   padding: 100px 20px;
+   border-radius: 0 0 30px 30px;
+   margin: 50px auto; /* Center the section */
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+   box-sizing: border-box; /* Ensures padding doesn't add extra width */
+   background-clip: content-box; /* Ensures only content gets the blue background */
+}
+
+/* Ensure images stay centered */
+.hero-image {
+    border: 5px solid #a4c8f0; /* Soft pastel blue border */
+    border-radius: 15px; /* Curved corners */
+    max-width: 100%; /* Ensures responsiveness */
+    display: block; /* Centers the image */
+    margin: 0 auto; /* Centers the image */
+}
+
+/* this is the part that is used to get my image and text left and right */
+.greg-profile {
+    display: flex;
+    align-items: center; /* Aligns items vertically */
+    justify-content: space-between; /* Pushes text left and image right */
+    max-width: 900px; /* Restrict width for better layout */
+    margin: 0 auto; /* Centers the entire section */
+    text-align: left; /* Ensures text aligns to the left */
+}
+
+/* Style the text container */
+.greg-text {
+    flex: 1; /* Takes up remaining space */
+    padding-right: 20px; /* Adds space between text and image */
+}
+
+/* Style the image */
+.greg-image {
+    border: 5px solid #a4c8f0; /* Soft pastel blue border */
+    border-radius: 15px; /* Curved corners */
+    max-width: 300px; /* Restrict width */
+    height: auto; /* Maintain aspect ratio */
+    display: block;
+}
+/* opposite part for jacks information and image */
+.jack-profile {
+    display: flex;
+    align-items: center; /* Aligns items vertically */
+    justify-content: space-between; /* Pushes text right and image left */
+    flex-direction: row-reverse; /* This flips the order: image left, text right */
+    max-width: 900px; /* Restrict width for better layout */
+    margin: 0 auto; /* Centers the entire section */
+    text-align: left; /* Ensures text aligns to the left */
+}
+
+/* Jack Text - Right */
+.jack-text {
+    flex: 1; /* Takes up remaining space */
+    padding-left: 20px; /* Adds space between image and text */
+}
+
+/* Jack Image - Left */
+.jack-image {
+    border: 5px solid #a4c8f0; /* Soft pastel blue border */
+    border-radius: 15px; /* Curved corners */
+    max-width: 300px; /* Restrict width */
+    height: auto; /* Maintain aspect ratio */
+    display: block;
+}
+
+/* Footer */
+footer {
+   background-color: #f4c542; /* Gold */
+   color: white; /* White text */
+   text-align: center;
+   padding: 20px;
+   margin-top: 40px;
+   font-size: 1rem;
+}
+
+/* Responsive Images */
+img {
+   max-width: 100%;
+   height: auto;
+   display: block;
+   margin: 10px auto;
+   border-radius: 5px;
+}
+
