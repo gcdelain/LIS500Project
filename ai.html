@@ -4,15 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AI Classifier Demo</title>
-
   <!-- External CSS -->
   <link rel="stylesheet" href="styles/stylesheets.css" />
-
   <!-- TensorFlow + Teachable Machine Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 </head>
-
 <body>
   <!-- Navigation -->
   <header>
@@ -23,48 +20,157 @@
         <li><a href="bias-resources.html">Resources</a></li>
         <li><a href="tech-hero.html">Tech Heros</a></li>
 	<li><a href="ai.html">Teachable Machine</a></li>
+	<li><a href="gregessay.html">Greg's Project Statement</a></li>
+	<li><a href="jackessay.html">Jacks's Project Statement</a></li>
 
       </ul>
     </nav>
   </header>
-
   <!-- Main content -->
-  <main class="container">
-    <h1>Teachable Machine Image Classifier</h1>
-    <p>This interactive demo uses your webcam to classify images in real-time using a model trained in Teachable Machine.</p>
+  <main>
+    <section class="splash">
+        <article class="tech-hero">
+            <h1>Teachable Machine Image Classifier</h1>
+		<h3>Experiment Overview<h3>
+			<p> My initial reaction when reading the prompt about relations to Joy Buolamwini's book
+			    'Unmasking AI'. The reason for her spark of interest in the racial disparities within 
+                            AI and Machine Learning started when she was a graduate student at MIT, when she found 
+                            out that facial recognition software did not work on people with darker skin complexions.
+                            She put on a white mask to attempt to be recognized, which immediately detected her face.
+                            She graduated from MIT with a PHD in 2022 when this research was conducted. With the 
+                            rapid improvement and development of AI and Machine learning, I wanted to see if it still
+                            struggles to detect faces for people with darker skin complexion.
+			</p>
+		<h3>Experiment<h3>
+			<p> For our experiment, we will use the most publicly available machine learning tool from 
+			    Google, which allows you to train images, sounds, and poses to detect what you train it 
+	    		    on. The images that the faces were trained on were images of myself, a white man, and 
+			    then images of random items around my apartment that were not of faces. To test the mode,
+			    we will use two images of similar size, 8.5 inches by 11 inches, that will be held at 
+			    increments of one foot, three feet, and then ten feet away in order to see if the facial 
+			    recognition stays the same. The software also works in percentages, so that we will be 
+			    able to directly compare the percentages of face detection that it finds.
+			</p>
+		<h3>Expected Results<h3>
+			<p> This experiment is meant to see whether Joy's activism and awareness of the problems 
+			    that people with darker skin complexion face on a day-to-day basis. Since reading her 
+			    book, I have researched AI and Machine learning, in that the developers have spent an 
+			    extensive amount of time attempting to get facial recognition software to work better on
+			    those with darker skin. My prediction of the experiment is that both faces will yield 
+			    similar results at close range, but the farther away the images are it the software will
+			    fall short on the darker-skinned person's image. 
+			</p>
 
-    <!-- Start Button -->
-    <button type="button" onclick="init()">Start Webcam Classifier</button>
+ <!-- Embedded video section -->
+<div style="text-align: center; margin-top: 30px;">
+  <video width="600" controls>
+    <source src="LIS500Demo.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Classifier button -->
+  <div style="margin-top: 40px;">
+    <a href="#" onclick="toggleClassifier(); return false;" class="button" id="classifier-button">Start Webcam Classifier</a>
+  </div>
+
+  <!-- ??? Moved Webcam & Label Container HERE ??? -->
+  <div id="webcam-container" style="margin-top: 30px;"></div>
+  <div id="label-container" style="margin-top: 10px; font-size: 18px;"></div>
+  <!-- ??? End Webcam Section ??? -->
+</div>
+
+<!-- Experiment Results -->
+<div style="margin-top: 60px; text-align: center;">
+  <h3>Results of Experiment</h3>
+
+  <!-- Results Table -->
+  <div style="margin-top: 30px; display: flex; justify-content: center;">
+    <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse;">
+      <tr>
+        <th>White Skin Face</th>
+        <th>Black Skin Face</th>
+      </tr>
+      <tr>
+        <td>&nbsp;100% Face Detected At 1 Foot&nbsp;</td>
+        <td>&nbsp;99% Face Detected At 1 Foot&nbsp;</td>
+      </tr>
+      <tr>
+        <td>  24% Face Detected At 3 Feet  </td>
+        <td>  2% Face Detected At 3 Feet  </td>
+      </tr>
+      <tr>
+        <td>  0% Face Detected At 10 Feet  </td>
+        <td>  0% Face Detected At 10 Feet  </td>
+      </tr>
+    </table>
+  </div>
+</div>
 
     <!-- Webcam & Label Containers -->
     <div id="webcam-container" style="margin-top: 20px;"></div>
     <div id="label-container" style="margin-top: 10px; font-size: 18px;"></div>
   </main>
-
   <!-- Optional Footer -->
   <footer>
-    <p>&copy; 2025 - Your Project Team</p>
-  </footer>
-
+      </footer>
   <!-- Teachable Machine Script -->
   <script type="text/javascript">
     const URL = "./my_model/";
-
     let model, webcam, labelContainer, maxPredictions;
-
+    let isRunning = false;
+    let animationFrameId = null;
+    
+    function toggleClassifier() {
+      const button = document.getElementById("classifier-button");
+      
+      if (!isRunning) {
+        // Start the classifier
+        button.textContent = "Stop Webcam Classifier";
+        init(); // Call full init process every time we start
+      } else {
+        // Stop the classifier
+        stopClassifier();
+        button.textContent = "Start Webcam Classifier";
+      }
+      
+      isRunning = !isRunning;
+    }
+    
+    function stopClassifier() {
+      // Stop animation frame
+      if (animationFrameId) {
+        window.cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+      
+      // Stop webcam
+      if (webcam) {
+        webcam.stop();
+      }
+      
+      // Remove webcam element
+      const webcamContainer = document.getElementById("webcam-container");
+      webcamContainer.innerHTML = "";
+      
+      // Clear labels
+      if (labelContainer) {
+        labelContainer.innerHTML = "";
+      }
+      
+      // Reset variables for clean restart
+      webcam = null;
+    }
+    
     async function init() {
       const modelURL = URL + "model.json";
       const metadataURL = URL + "metadata.json";
-
       model = await tmImage.load(modelURL, metadataURL);
       maxPredictions = model.getTotalClasses();
-
       const flip = true;
-      webcam = new tmImage.Webcam(200, 200, flip);
+      webcam = new tmImage.Webcam(600, 600, flip);
       await webcam.setup();
       await webcam.play();
-      window.requestAnimationFrame(loop);
-
+      animationFrameId = window.requestAnimationFrame(loop);
       document.getElementById("webcam-container").appendChild(webcam.canvas);
       labelContainer = document.getElementById("label-container");
       labelContainer.innerHTML = "";
@@ -72,13 +178,13 @@
         labelContainer.appendChild(document.createElement("div"));
       }
     }
-
+    
     async function loop() {
       webcam.update();
       await predict();
-      window.requestAnimationFrame(loop);
+      animationFrameId = window.requestAnimationFrame(loop);
     }
-
+    
     async function predict() {
       const prediction = await model.predict(webcam.canvas);
       for (let i = 0; i < maxPredictions; i++) {
