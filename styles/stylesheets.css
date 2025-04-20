@@ -118,16 +118,18 @@ p {
 
 /* creates a center for the section*/
 section {
-   padding: 60px 20px;
+   padding-bottom: 60px;
    text-align: center;
+   width: 75%;
+   margin: auto
 }
 
 /* section for the words to be in a blue box as well as the images */
 .splash {
    background: linear-gradient(to right, #a4c8f0, #d7e9fb); /* Light pastel blue gradient */
    color: #333;
-   padding: 100px 20px;
-   border-radius: 0 0 30px 30px;
+   padding: 50px 50px;
+   border-radius: 10px;
    margin: 50px auto; /* Center the section */
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
    box-sizing: border-box; /* Ensures padding doesn't add extra width */
@@ -137,10 +139,10 @@ section {
 /* Ensure images stay centered */
 .hero-image {
     border: 5px solid #a4c8f0; /* Soft pastel blue border */
-    border-radius: 15px; /* Curved corners */
+    border-radius: 30px; /* Curved corners */
     max-width: 100%; /* Ensures responsiveness */
     display: block; /* Centers the image */
-    margin: 0 auto; /* Centers the image */
+    margin: auto; /* Centers the image */
 }
 
 /* this is the part that is used to get my image and text left and right */
@@ -210,5 +212,9 @@ img {
    display: block;
    margin: 10px auto;
    border-radius: 5px;
+}
+.ul {
+   list-style-type: disc;
+   list-style-position: inside;
 }
 
